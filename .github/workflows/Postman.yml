@@ -1,0 +1,31 @@
+name: Postman Performance Testing
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  performance-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+
+    - name: Install Newman
+      run: npm install -g newman
+
+    - name: Run Postman Performance Tests
+      run: newman run /path/to/your/collection.json -e /path/to/your/environment.json
+
+    - name: Upload Postman Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: postman-report
+        path: /path/to/your/report
